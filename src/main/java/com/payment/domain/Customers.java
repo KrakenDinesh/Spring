@@ -14,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "customers")
 public class Customers {
+
 	@Id
 	private String customerid;
 	private String accountholdername;
@@ -21,16 +22,20 @@ public class Customers {
 	private String customeraddress, customercity, customertype;
 	private boolean overdraftflag;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customertransactionid")
-	private List<Transaction> transaction = new ArrayList<Transaction>();
-
-	public List<Transaction> getTransaction() {
-		return transaction;
+	public Customers() {
+		super();
 	}
 
-	public void setTransaction(List<Transaction> transaction) {
-		this.transaction = transaction;
+	public Customers(String customerid, String accountholdername, double clearbalance, String customeraddress,
+			String customercity, String customertype, boolean overdraftflag) {
+		super();
+		this.customerid = customerid;
+		this.accountholdername = accountholdername;
+		this.clearbalance = clearbalance;
+		this.customeraddress = customeraddress;
+		this.customercity = customercity;
+		this.customertype = customertype;
+		this.overdraftflag = overdraftflag;
 	}
 
 	public String getCustomerid() {
@@ -92,7 +97,7 @@ public class Customers {
 	@Override
 	public int hashCode() {
 		return Objects.hash(accountholdername, clearbalance, customeraddress, customercity, customerid, customertype,
-				overdraftflag, transaction);
+				overdraftflag);
 	}
 
 	@Override
@@ -108,16 +113,11 @@ public class Customers {
 				&& Double.doubleToLongBits(clearbalance) == Double.doubleToLongBits(other.clearbalance)
 				&& Objects.equals(customeraddress, other.customeraddress)
 				&& Objects.equals(customercity, other.customercity) && Objects.equals(customerid, other.customerid)
-				&& Objects.equals(customertype, other.customertype) && overdraftflag == other.overdraftflag
-				&& Objects.equals(transaction, other.transaction);
+				&& Objects.equals(customertype, other.customertype) && overdraftflag == other.overdraftflag;
 	}
 
-	@Override
-	public String toString() {
-		return "Customers [customerid=" + customerid + ", accountholdername=" + accountholdername + ", clearbalance="
-				+ clearbalance + ", customeraddress=" + customeraddress + ", customercity=" + customercity
-				+ ", customertype=" + customertype + ", overdraftflag=" + overdraftflag + ", transaction=" + transaction
-				+ "]";
-	}
+//	@OneToMany(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "customertransactionid")
+//	private List<Transaction> transaction = new ArrayList<Transaction>();
 
 }
